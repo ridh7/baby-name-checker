@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { namingLaws } from "./namingLaws";
+import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+
+// URL for U.S. state topology
+const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
 export default function Home() {
   const [state, setState] = useState<keyof typeof namingLaws>("Alabama");
@@ -11,6 +15,7 @@ export default function Home() {
 
   const states = Object.keys(namingLaws) as (keyof typeof namingLaws)[];
 
+  // Length restriction stats
   const totalStates = states.length;
   const statesWithLengthRestriction = states.filter(
     (s) => namingLaws[s].maxLength !== undefined
@@ -145,7 +150,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* Visualization */}
+        {/* Length Restriction Bar */}
         <div className="mt-8">
           <h2 className="text-lg font-medium text-white mb-4 text-center">
             Length Restriction Statistics
@@ -169,6 +174,45 @@ export default function Home() {
           <div className="flex justify-between text-xs text-gray-400 mt-2">
             <span>With Length Restriction</span>
             <span>Without Length Restriction</span>
+          </div>
+        </div>
+
+        {/* U.S. Map Visualization */}
+        <div className="mt-8">
+          <h2 className="text-lg font-medium text-white mb-4 text-center">
+            Length Restrictions by State
+          </h2>
+          <ComposableMap projection="geoAlbersUsa" className="w-full h-96">
+            <Geographies geography={geoUrl}>
+              {({ geographies }) =>
+                geographies.map((geo) => {
+                  const stateName = geo.properties
+                    .name as keyof typeof namingLaws;
+                  const hasLengthRestriction =
+                    namingLaws[stateName]?.maxLength !== undefined;
+                  return (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill={hasLengthRestriction ? "#6366f1" : "#6b7280"}
+                      stroke="#ffffff"
+                      strokeWidth={0.5}
+                      className="hover:opacity-80 transition-opacity"
+                    />
+                  );
+                })
+              }
+            </Geographies>
+          </ComposableMap>
+          <div className="flex justify-center gap-6 text-xs text-gray-400 mt-2">
+            <span className="flex items-center">
+              <span className="w-3 h-3 bg-indigo-500 inline-block mr-1" />
+              With Length Restriction
+            </span>
+            <span className="flex items-center">
+              <span className="w-3 h-3 bg-gray-500 inline-block mr-1" />
+              Without Length Restriction
+            </span>
           </div>
         </div>
       </div>

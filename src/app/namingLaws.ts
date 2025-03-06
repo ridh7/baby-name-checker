@@ -1,3 +1,4 @@
+// app/namingLaws.ts
 interface StateNamingLaw {
   rule: string;
   allowed: RegExp;
@@ -33,5 +34,14 @@ export const namingLaws: NamingLaws = {
     rule: "English alphabetic characters and hyphens allowed. 75 character limit.",
     allowed: /^[A-Za-z-]+$/,
     maxLength: 75,
+  },
+  Florida: {
+    rule: "English alphabetic characters, hyphens, and apostrophes allowed.",
+    allowed: /^[A-Za-z'-]+$/,
+  },
+  Georgia: {
+    rule: "English alphabetic characters only. 30 character limit.",
+    allowed: /^[A-Za-z]+$/,
+    maxLength: 30,
   },
 };
