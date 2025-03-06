@@ -11,6 +11,17 @@ export default function Home() {
 
   const states = Object.keys(namingLaws) as (keyof typeof namingLaws)[];
 
+  const totalStates = states.length;
+  const statesWithLengthRestriction = states.filter(
+    (s) => namingLaws[s].maxLength !== undefined
+  ).length;
+  const statesWithoutLengthRestriction =
+    totalStates - statesWithLengthRestriction;
+  const withRestrictionPercent =
+    (statesWithLengthRestriction / totalStates) * 100;
+  const withoutRestrictionPercent =
+    (statesWithoutLengthRestriction / totalStates) * 100;
+
   const checkName = () => {
     const rules = namingLaws[state];
     const isValid = rules.allowed.test(name);
@@ -51,7 +62,7 @@ export default function Home() {
           Baby Name Checker
         </h1>
 
-        {/* State Selection with Minimalistic Dropdown */}
+        {/* State Selection */}
         <div className="mb-6">
           <label className="block text-gray-300 text-sm font-medium mb-2">
             Select State
@@ -133,6 +144,33 @@ export default function Home() {
             </p>
           </div>
         )}
+
+        {/* Visualization */}
+        <div className="mt-8">
+          <h2 className="text-lg font-medium text-white mb-4 text-center">
+            Length Restriction Statistics
+          </h2>
+          <div className="flex w-full h-6 bg-gray-600 rounded-full overflow-hidden">
+            <div
+              style={{ width: `${withRestrictionPercent}%` }}
+              className="bg-indigo-500 flex items-center justify-center text-xs text-white"
+            >
+              {statesWithLengthRestriction} ({withRestrictionPercent.toFixed(1)}
+              %)
+            </div>
+            <div
+              style={{ width: `${withoutRestrictionPercent}%` }}
+              className="bg-gray-500 flex items-center justify-center text-xs text-white"
+            >
+              {statesWithoutLengthRestriction} (
+              {withoutRestrictionPercent.toFixed(1)}%)
+            </div>
+          </div>
+          <div className="flex justify-between text-xs text-gray-400 mt-2">
+            <span>With Length Restriction</span>
+            <span>Without Length Restriction</span>
+          </div>
+        </div>
       </div>
     </div>
   );
