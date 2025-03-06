@@ -115,7 +115,21 @@ export default function Home() {
               {result}
             </p>
             <p className="text-xs mt-2 text-gray-400 leading-relaxed">
-              Rule: {namingLaws[state].rule}
+              {namingLaws[state].link ? (
+                <>
+                  <a
+                    href={namingLaws[state].link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-indigo-400 hover:text-indigo-300 underline transition-colors"
+                  >
+                    Rule
+                  </a>
+                  : {namingLaws[state].rule}
+                </>
+              ) : (
+                `Rule: ${namingLaws[state].rule}`
+              )}
             </p>
           </div>
         )}
