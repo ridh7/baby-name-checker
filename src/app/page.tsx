@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { namingLaws } from "./namingLaws";
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
-
-// URL for U.S. state topology
-const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
+import stateData from "./stateDataLength.json";
+import gridLayout from "./gridLayout.json";
+import { scaleLinear } from "d3-scale";
 
 export default function Home() {
+  // ── Baby Name Checker State ──
   const [state, setState] = useState<keyof typeof namingLaws>("Alabama");
   const [name, setName] = useState("");
   const [result, setResult] = useState("");
@@ -15,7 +15,7 @@ export default function Home() {
 
   const states = Object.keys(namingLaws) as (keyof typeof namingLaws)[];
 
-  // Length restriction stats
+  // Stats for length restrictions (optional)
   const totalStates = states.length;
   const statesWithLengthRestriction = states.filter(
     (s) => namingLaws[s].maxLength !== undefined
@@ -36,108 +36,83 @@ export default function Home() {
       setResult("Please enter a name.");
       setIsValidName(false);
     } else if (exceedsLength) {
-      setResult(
-        `Name exceeds maximum length of ${rules.maxLength} characters.`
-      );
+      setResult(`Name exceeds max length of ${rules.maxLength}.`);
       setIsValidName(false);
     } else if (isValid) {
       setResult("This name is allowed!");
       setIsValidName(true);
     } else {
-      setResult(
-        `This name is not allowed. Reason: ${getReason(name, rules.allowed)}`
-      );
+      setResult(`Not allowed: ${getReason(name, rules.allowed)}`);
       setIsValidName(false);
     }
   };
 
   const getReason = (name: string, regex: RegExp) => {
     if (/[^A-Za-z]/.test(name) && !/['-]/.test(name))
-      return "Contains invalid characters (only letters, hyphens, and apostrophes allowed in most states).";
+      return "Invalid characters (only letters, hyphens, apostrophes).";
     if (/\d/.test(name)) return "Contains numbers.";
     if (/[À-ÿ]/.test(name) && !regex.test(name))
-      return "Contains non-English characters not allowed in this state.";
-    return "Violates state-specific character rules.";
+      return "Non-English characters not allowed.";
+    return "Violates state-specific rules.";
   };
 
+  // ── COLOR SCALE: 1 → red, 5 → blue ──
+  const colorScale = scaleLinear<string>()
+    .domain([1, 5])
+    .range(["#ff0000", "#0000ff"]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4">
-      <div className="bg-gray-800 rounded-xl shadow-2xl p-8 w-full max-w-lg transform transition-all hover:scale-105">
-        <h1 className="text-3xl font-semibold text-white mb-6 text-center tracking-tight">
+    <div className="min-h-screen bg-gray-100 py-8 px-4">
+      {/* ——— Baby Name Checker ——— */}
+      <div className="max-w-lg mx-auto bg-gray-800 rounded-xl shadow-2xl p-8 mb-12">
+        <h1 className="text-3xl font-semibold text-white mb-6 text-center">
           Baby Name Checker
         </h1>
 
-        {/* State Selection */}
-        <div className="mb-6">
-          <label className="block text-gray-300 text-sm font-medium mb-2">
-            Select State
-          </label>
-          <div className="relative">
-            <select
-              value={state}
-              onChange={(e) =>
-                setState(e.target.value as keyof typeof namingLaws)
-              }
-              className="w-full p-2 bg-gray-700 text-white border-b rounded-lg border-gray-600 focus:outline-none focus:border-indigo-400 transition-colors appearance-none pr-8"
-            >
-              {states.map((s) => (
-                <option key={s} value={s} className="bg-gray-700 text-white">
-                  {s}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-              <svg
-                className="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-              </svg>
-            </div>
-          </div>
-        </div>
+        {/* State Selector */}
+        <label className="block text-gray-300 mb-2">Select State</label>
+        <select
+          value={state}
+          onChange={(e) => setState(e.target.value as keyof typeof namingLaws)}
+          className="w-full mb-4 p-2 bg-gray-700 text-white rounded focus:outline-none"
+        >
+          {states.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
 
         {/* Name Input */}
-        <div className="mb-6">
-          <label className="block text-gray-300 text-sm font-medium mb-2">
-            Enter Name
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400 transition-all"
-            placeholder="e.g., Mary-Jane"
-          />
-        </div>
+        <label className="block text-gray-300 mb-2">Enter Name</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="e.g., Mary-Jane"
+          className="w-full mb-4 p-3 bg-gray-700 text-white rounded focus:outline-none"
+        />
 
-        {/* Button */}
         <button
           onClick={checkName}
-          className="w-full bg-indigo-600 text-white p-3 rounded-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all"
+          className="w-full bg-indigo-600 text-white py-3 rounded font-semibold hover:bg-indigo-700 transition"
         >
           Check Name
         </button>
 
-        {/* Result Display */}
         {result && (
-          <div className="mt-6 p-4 bg-gray-700 rounded-lg border border-gray-600">
-            <p
-              className={`text-sm ${
-                isValidName ? "text-green-400" : "text-red-400"
-              }`}
-            >
+          <div className="mt-4 p-4 bg-gray-700 rounded">
+            <p className={isValidName ? "text-green-400" : "text-red-400"}>
               {result}
             </p>
-            <p className="text-xs mt-2 text-gray-400 leading-relaxed">
+            <p className="text-xs text-gray-400 mt-2">
               {namingLaws[state].link ? (
                 <>
                   <a
                     href={namingLaws[state].link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-indigo-400 hover:text-indigo-300 underline transition-colors"
+                    className="underline text-indigo-400"
                   >
                     Rule
                   </a>
@@ -150,71 +125,59 @@ export default function Home() {
           </div>
         )}
 
-        {/* Length Restriction Bar */}
+        {/* Length Restriction Stats (optional) */}
         <div className="mt-8">
-          <h2 className="text-lg font-medium text-white mb-4 text-center">
-            Length Restriction Statistics
-          </h2>
-          <div className="flex w-full h-6 bg-gray-600 rounded-full overflow-hidden">
+          <h2 className="text-white mb-2 text-center">Length Restriction</h2>
+          <div className="flex h-4 bg-gray-600 rounded overflow-hidden">
             <div
               style={{ width: `${withRestrictionPercent}%` }}
-              className="bg-indigo-500 flex items-center justify-center text-xs text-white"
-            >
-              {statesWithLengthRestriction} ({withRestrictionPercent.toFixed(1)}
-              %)
-            </div>
+              className="bg-indigo-500"
+            />
             <div
               style={{ width: `${withoutRestrictionPercent}%` }}
-              className="bg-gray-500 flex items-center justify-center text-xs text-white"
-            >
-              {statesWithoutLengthRestriction} (
-              {withoutRestrictionPercent.toFixed(1)}%)
-            </div>
+              className="bg-gray-500"
+            />
           </div>
-          <div className="flex justify-between text-xs text-gray-400 mt-2">
-            <span>With Length Restriction</span>
-            <span>Without Length Restriction</span>
+          <div className="flex justify-between text-xs text-gray-400 mt-1">
+            <span>With Restr.</span>
+            <span>Without Restr.</span>
           </div>
         </div>
+      </div>
 
-        {/* U.S. Map Visualization */}
-        <div className="mt-8">
-          <h2 className="text-lg font-medium text-white mb-4 text-center">
-            Length Restrictions by State
-          </h2>
-          <ComposableMap projection="geoAlbersUsa" className="w-full h-96">
-            <Geographies geography={geoUrl}>
-              {({ geographies }) =>
-                geographies.map((geo) => {
-                  const stateName = geo.properties
-                    .name as keyof typeof namingLaws;
-                  const hasLengthRestriction =
-                    namingLaws[stateName]?.maxLength !== undefined;
-                  return (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill={hasLengthRestriction ? "#6366f1" : "#6b7280"}
-                      stroke="#ffffff"
-                      strokeWidth={0.5}
-                      className="hover:opacity-80 transition-opacity"
-                    />
-                  );
-                })
-              }
-            </Geographies>
-          </ComposableMap>
-          <div className="flex justify-center gap-6 text-xs text-gray-400 mt-2">
-            <span className="flex items-center">
-              <span className="w-3 h-3 bg-indigo-500 inline-block mr-1" />
-              With Length Restriction
-            </span>
-            <span className="flex items-center">
-              <span className="w-3 h-3 bg-gray-500 inline-block mr-1" />
-              Without Length Restriction
-            </span>
-          </div>
+      {/* ——— Square-Tile Grid Map ——— */}
+      <div className="max-w-screen-lg mx-auto p-4 bg-white rounded-lg shadow">
+        <h2 className="text-2xl font-semibold mb-4 text-center">
+          U.S. Tile Grid (1–5 scale)
+        </h2>
+        <div className="grid grid-cols-11 grid-rows-7 gap-1">
+          {(
+            Object.entries(gridLayout) as [
+              string,
+              { row: number; col: number }
+            ][]
+          ).map(([abbr, { row, col }]) => {
+            const val = (stateData as Record<string, number>)[abbr];
+            const bgColor = val !== 0 ? colorScale(val) : "#ddd";
+
+            return (
+              <div
+                key={abbr}
+                style={{
+                  gridRow: row,
+                  gridColumn: col,
+                  backgroundColor: bgColor,
+                }}
+                className="aspect-square flex items-center justify-center text-white font-bold rounded"
+              >
+                {abbr}
+              </div>
+            );
+          })}
         </div>
+        <p className="mt-2 text-center text-gray-600">
+          1 = red &nbsp;–&nbsp; 5 = blue
+        </p>
       </div>
     </div>
   );
