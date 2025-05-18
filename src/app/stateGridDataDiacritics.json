@@ -1,0 +1,308 @@
+{
+    "AL": {
+        "row": 7,
+        "col": 7,
+        "value": 3,
+        "asterisk": false
+    },
+    "AK": {
+        "row": 1,
+        "col": 1,
+        "value": 3,
+        "asterisk": true
+    },
+    "AZ": {
+        "row": 6,
+        "col": 2,
+        "value": 2,
+        "asterisk": false
+    },
+    "AR": {
+        "row": 6,
+        "col": 5,
+        "value": 1,
+        "asterisk": true
+    },
+    "CA": {
+        "row": 5,
+        "col": 1,
+        "value": 3,
+        "asterisk": false
+    },
+    "CO": {
+        "row": 5,
+        "col": 3,
+        "value": 3,
+        "asterisk": false
+    },
+    "CT": {
+        "row": 4,
+        "col": 10,
+        "value": 1,
+        "asterisk": true
+    },
+    "DE": {
+        "row": 5,
+        "col": 10,
+        "value": 1,
+        "asterisk": true
+    },
+    "DC": {
+        "row": 6,
+        "col": 9,
+        "value": 3,
+        "asterisk": false
+    },
+    "FL": {
+        "row": 8,
+        "col": 9,
+        "value": 1,
+        "asterisk": true
+    },
+    "GA": {
+        "row": 7,
+        "col": 8,
+        "value": 1,
+        "asterisk": true
+    },
+    "HI": {
+        "row": 8,
+        "col": 1,
+        "value": 1,
+        "asterisk": false
+    },
+    "ID": {
+        "row": 3,
+        "col": 2,
+        "value": 1,
+        "asterisk": true
+    },
+    "IL": {
+        "row": 3,
+        "col": 6,
+        "value": 1,
+        "asterisk": true
+    },
+    "IN": {
+        "row": 4,
+        "col": 6,
+        "value": 1,
+        "asterisk": true
+    },
+    "IA": {
+        "row": 4,
+        "col": 5,
+        "value": 3,
+        "asterisk": false
+    },
+    "KS": {
+        "row": 6,
+        "col": 4,
+        "value": 3,
+        "asterisk": true
+    },
+    "KY": {
+        "row": 5,
+        "col": 6,
+        "value": 1,
+        "asterisk": true
+    },
+    "LA": {
+        "row": 7,
+        "col": 5,
+        "value": 3,
+        "asterisk": true
+    },
+    "ME": {
+        "row": 1,
+        "col": 11,
+        "value": 1,
+        "asterisk": true
+    },
+    "MD": {
+        "row": 5,
+        "col": 9,
+        "value": 1,
+        "asterisk": true
+    },
+    "MA": {
+        "row": 3,
+        "col": 10,
+        "value": 1,
+        "asterisk": false
+    },
+    "MI": {
+        "row": 3,
+        "col": 7,
+        "value": 3,
+        "asterisk": false
+    },
+    "MN": {
+        "row": 3,
+        "col": 5,
+        "value": 3,
+        "asterisk": false
+    },
+    "MS": {
+        "row": 7,
+        "col": 6,
+        "value": 3,
+        "asterisk": false
+    },
+    "MO": {
+        "row": 5,
+        "col": 5,
+        "value": 1,
+        "asterisk": false
+    },
+    "MT": {
+        "row": 3,
+        "col": 3,
+        "value": 1,
+        "asterisk": true
+    },
+    "NE": {
+        "row": 5,
+        "col": 4,
+        "value": 1,
+        "asterisk": true
+    },
+    "NV": {
+        "row": 4,
+        "col": 2,
+        "value": 2,
+        "asterisk": true
+    },
+    "NH": {
+        "row": 2,
+        "col": 11,
+        "value": 1,
+        "asterisk": true
+    },
+    "NJ": {
+        "row": 4,
+        "col": 9,
+        "value": 1,
+        "asterisk": true
+    },
+    "NM": {
+        "row": 6,
+        "col": 3,
+        "value": 3,
+        "asterisk": false
+    },
+    "NY": {
+        "row": 3,
+        "col": 9,
+        "value": 1,
+        "asterisk": true
+    },
+    "NC": {
+        "row": 6,
+        "col": 7,
+        "value": 1,
+        "asterisk": true
+    },
+    "ND": {
+        "row": 3,
+        "col": 4,
+        "value": 1,
+        "asterisk": true
+    },
+    "OH": {
+        "row": 4,
+        "col": 7,
+        "value": 3,
+        "asterisk": false
+    },
+    "OK": {
+        "row": 7,
+        "col": 4,
+        "value": 3,
+        "asterisk": true
+    },
+    "OR": {
+        "row": 4,
+        "col": 1,
+        "value": 1,
+        "asterisk": false
+    },
+    "PA": {
+        "row": 4,
+        "col": 8,
+        "value": 1,
+        "asterisk": false
+    },
+    "RI": {
+        "row": 4,
+        "col": 11,
+        "value": 3,
+        "asterisk": true
+    },
+    "SC": {
+        "row": 6,
+        "col": 8,
+        "value": 1,
+        "asterisk": true
+    },
+    "SD": {
+        "row": 4,
+        "col": 4,
+        "value": 1,
+        "asterisk": true
+    },
+    "TN": {
+        "row": 6,
+        "col": 6,
+        "value": 1,
+        "asterisk": true
+    },
+    "TX": {
+        "row": 8,
+        "col": 4,
+        "value": 1,
+        "asterisk": false
+    },
+    "UT": {
+        "row": 5,
+        "col": 2,
+        "value": 1,
+        "asterisk": false
+    },
+    "VT": {
+        "row": 2,
+        "col": 10,
+        "value": 2,
+        "asterisk": false
+    },
+    "VA": {
+        "row": 5,
+        "col": 8,
+        "value": 2,
+        "asterisk": true
+    },
+    "WA": {
+        "row": 3,
+        "col": 1,
+        "value": 1,
+        "asterisk": true
+    },
+    "WV": {
+        "row": 5,
+        "col": 7,
+        "value": 3,
+        "asterisk": false
+    },
+    "WI": {
+        "row": 2,
+        "col": 6,
+        "value": 3,
+        "asterisk": false
+    },
+    "WY": {
+        "row": 4,
+        "col": 3,
+        "value": 3,
+        "asterisk": false
+    }
+}
