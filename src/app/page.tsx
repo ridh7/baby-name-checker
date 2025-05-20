@@ -13,7 +13,7 @@ export default function Home() {
     .range(["#3fa9f5", "#14183d"]); // Corresponding colors
 
   const colorScale2 = scaleLinear<string>()
-    .domain([1, 5]) // Data values 1, 2, 3
+    .domain([1, 5]) // Data values 1, 2, 3, 4, 5
     .range(["#ff0000", "#300000"]); // Corresponding colors
 
   return (
@@ -170,7 +170,7 @@ export default function Home() {
             </div>
           </div>
           <p className="mt-3 text-center text-xs text-gray-500 px-2">
-            Map visualizes restriction levels from 1 (lightest red) to 3
+            Map visualizes restriction levels from 1 (lightest red) to 5
             (darkest red). Grey tiles indicate no specific data for this scale
             or state not included.
           </p>

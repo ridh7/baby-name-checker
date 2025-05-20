@@ -26,13 +26,13 @@
     "CA": {
         "row": 5,
         "col": 1,
-        "value": 4,
+        "value": 2,
         "asterisk": true
     },
     "CO": {
         "row": 5,
         "col": 3,
-        "value": 5,
+        "value": 1,
         "asterisk": false
     },
     "CT": {
@@ -158,7 +158,7 @@
     "MT": {
         "row": 3,
         "col": 3,
-        "value": 2,
+        "value": 4,
         "asterisk": false
     },
     "NE": {
@@ -176,7 +176,7 @@
     "NH": {
         "row": 2,
         "col": 11,
-        "value": 5,
+        "value": 1,
         "asterisk": true
     },
     "NJ": {
@@ -194,7 +194,7 @@
     "NY": {
         "row": 3,
         "col": 9,
-        "value": 2,
+        "value": 4,
         "asterisk": true
     },
     "NC": {
@@ -260,7 +260,7 @@
     "TX": {
         "row": 8,
         "col": 4,
-        "value": 5,
+        "value": 1,
         "asterisk": true
     },
     "UT": {
@@ -284,7 +284,7 @@
     "WA": {
         "row": 3,
         "col": 1,
-        "value": 2,
+        "value": 4,
         "asterisk": true
     },
     "WV": {
