@@ -1,54 +1,104 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
+import { useMemo } from "react";
 import stateGridDataDiacritics from "./stateGridDataDiacritics.json"; // Ensure this path is correct
-import stateGridDataLength from "./stateGridDataLength.json";
+import stateGridDataLength from "./stateGridDataLength.json"; // Ensure this file is created with the content above
+
+// Helper function to create a gradient string for legends
+const getGradientString = (colors: string[]) => {
+  if (colors.length === 0) return "";
+  if (colors.length === 1) return colors[0]; // Solid color if only one
+  return `linear-gradient(to right, ${colors.join(", ")})`;
+};
 
 export default function Home() {
-  // ── COLOR SCALE for the map ──
-  // This scale maps data values from 1 to 3 to a range of colors
-  // from light red (#ff0000) to dark red (#300000).
+  // --- MAP 1: Accents Permitted (Diacritics) ---
+  // colorScale1: 1 (No Restrictions - Light Blue) to 3 (Many Restrictions - Dark Blue)
   const colorScale1 = scaleLinear<string>()
-    .domain([1, 3]) // Data values 1, 2, 3
-    .range(["#3fa9f5", "#14183d"]); // Corresponding colors
+    .domain([1, 3])
+    .range(["#3fa9f5", "#14183d"]);
 
-  const colorScale2 = scaleLinear<string>()
-    .domain([1, 5]) // Data values 1, 2, 3, 4, 5
-    .range(["#ff0000", "#300000"]); // Corresponding colors
+  // --- MAP 2: Name Length Restrictions ---
+  const {
+    firstNameValues,
+    fullNameValues,
+    minFirstNameLength,
+    maxFirstNameLength,
+    minFullNameLength,
+    maxFullNameLength,
+  } = useMemo(() => {
+    const firstNames: number[] = [];
+    const fullNames: number[] = [];
+
+    Object.values(stateGridDataLength).forEach((state: any) => {
+      // Using 'any' for state type from JSON import
+      if (state.value > 0) {
+        if (state.firstName === 1) {
+          firstNames.push(state.value);
+        } else if (state.firstName === 0) {
+          fullNames.push(state.value);
+        }
+      }
+    });
+
+    const safeMin = (arr: number[]) => (arr.length ? Math.min(...arr) : 1);
+    const safeMax = (arr: number[]) => (arr.length ? Math.max(...arr) : 1);
+
+    return {
+      firstNameValues: firstNames,
+      fullNameValues: fullNames,
+      minFirstNameLength: safeMin(firstNames),
+      maxFirstNameLength: Math.max(safeMin(firstNames), safeMax(firstNames)), // Ensure max is not less than min
+      minFullNameLength: safeMin(fullNames),
+      maxFullNameLength: Math.max(safeMin(fullNames), safeMax(fullNames)), // Ensure max is not less than min
+    };
+  }, []);
+
+  // Smallest length = Darkest color, Largest length = Lightest color
+  const colorScaleFirstNameLength = scaleLinear<string>()
+    .domain([
+      minFirstNameLength,
+      maxFirstNameLength === minFirstNameLength
+        ? maxFirstNameLength + 1
+        : maxFirstNameLength,
+    ]) // Avoid same domain values
+    .range(["#284C98", "#3fa9f5"]); // Dark Blue (small length) to Light Blue (large length)
+
+  const colorScaleFullNameLength = scaleLinear<string>()
+    .domain([
+      minFullNameLength,
+      maxFullNameLength === minFullNameLength
+        ? maxFullNameLength + 1
+        : maxFullNameLength,
+    ]) // Avoid same domain values
+    .range(["#990000", "#ff0000"]); // Dark Red (small length) to Light Red (large length)
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4 flex flex-col items-center justify-center">
-      {/* ——— Square-Tile Grid Map ——— */}
+    <div className="min-h-screen bg-gray-100 py-8 px-4 flex flex-col items-center justify-center space-y-8">
+      {/* ——— MAP 1: Accents Permitted in First Names ——— */}
       <div className="w-full max-w-screen-lg mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-xl">
-        {" "}
-        {/* Added shadow-xl and responsive padding */}
         <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-center text-gray-800">
-          {" "}
-          {/* Responsive text and margin */}
           Accents Permitted in First Names
         </h2>
         <div className="grid grid-cols-11 grid-rows-7 gap-1 max-w-md mx-auto sm:max-w-lg">
-          {" "}
-          {/* Centered grid and responsive max-width */}
           {(
             Object.entries(stateGridDataDiacritics) as [
               string,
               { row: number; col: number; value: number; asterisk: boolean }
             ][]
           ).map(([abbr, { row, col, value, asterisk }]) => {
-            // Determine background color: use colorScale for values 1-3, or gray for 0/other.
             const bgColor =
               value >= 1 && value <= 3 ? colorScale1(value) : "#dddddd";
-
             return (
               <div
-                key={abbr}
+                key={`diacritic-${abbr}`}
                 style={{
                   gridRow: row,
                   gridColumn: col,
                   backgroundColor: bgColor,
                 }}
-                className="aspect-square flex items-center justify-center text-white font-bold rounded text-xs sm:text-sm" /* Responsive text size */
+                className="aspect-square flex items-center justify-center text-white font-bold rounded text-xs sm:text-sm"
               >
                 {abbr}
                 {asterisk ? "*" : ""}
@@ -56,70 +106,78 @@ export default function Home() {
             );
           })}
         </div>
-        {/* --- MAP LEGEND --- */}
         <div className="mt-6 sm:mt-8">
           <h4 className="text-sm sm:text-base font-semibold mb-3 text-center text-gray-700">
-            Restriction Level Legend
+            Accent Restriction Level
           </h4>
           <div className="flex justify-center items-start space-x-2 sm:space-x-4">
             <div className="flex flex-col items-center text-center">
               <div
                 className="w-4 h-4 sm:w-5 sm:h-5 rounded mb-1 border border-gray-400"
-                style={{ backgroundColor: colorScale1(1) }} // Light Red for value 1
+                style={{ backgroundColor: colorScale1(1) }} // Lightest Blue
               ></div>
               <span className="text-xs text-gray-600">No Restrictions</span>
             </div>
             <div className="flex flex-col items-center text-center">
               <div
                 className="w-4 h-4 sm:w-5 sm:h-5 rounded mb-1 border border-gray-400"
-                style={{ backgroundColor: colorScale1(2) }} // Mid Red for value 2
+                style={{ backgroundColor: colorScale1(2) }} // Mid Blue
               ></div>
               <span className="text-xs text-gray-600">Some Restrictions</span>
             </div>
             <div className="flex flex-col items-center text-center">
               <div
                 className="w-4 h-4 sm:w-5 sm:h-5 rounded mb-1 border border-gray-400"
-                style={{ backgroundColor: colorScale1(3) }} // Dark Red for value 3
+                style={{ backgroundColor: colorScale1(3) }} // Darkest Blue
               ></div>
               <span className="text-xs text-gray-600">Many Restrictions</span>
             </div>
           </div>
           <p className="mt-3 text-center text-xs text-gray-500 px-2">
-            Map visualizes restriction levels from light blue to dark blue. Asterisks indicate that the data is not from an official source.
+            Map visualizes restriction levels from light blue to dark blue.
+            Grey: Data not available. Asterisks (*) indicate data may not be
+            from official sources.
           </p>
         </div>
-        {/* --- END OF MAP LEGEND --- */}
       </div>
+
+      {/* ——— MAP 2: Name Length Restrictions ——— */}
       <div className="w-full max-w-screen-lg mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-xl">
-        {" "}
-        {/* Added shadow-xl and responsive padding */}
         <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-center text-gray-800">
-          {" "}
-          {/* Responsive text and margin */}
-          First Name Length Restrictions
+          Name Length Restrictions (Characters)
         </h2>
         <div className="grid grid-cols-11 grid-rows-7 gap-1 max-w-md mx-auto sm:max-w-lg">
-          {" "}
-          {/* Centered grid and responsive max-width */}
           {(
             Object.entries(stateGridDataLength) as [
               string,
-              { row: number; col: number; value: number; asterisk: boolean }
+              {
+                row: number;
+                col: number;
+                value: number;
+                asterisk: boolean;
+                firstName?: number;
+              }
             ][]
-          ).map(([abbr, { row, col, value, asterisk }]) => {
-            // Determine background color: use colorScale for values 1-3, or gray for 0/other.
-            const bgColor =
-              value >= 1 && value <= 5 ? colorScale2(value) : "#dddddd";
+          ).map(([abbr, { row, col, value, asterisk, firstName }]) => {
+            let bgColor = "#dddddd";
+
+            if (value > 0) {
+              if (firstName === 1 && firstNameValues.length > 0) {
+                bgColor = colorScaleFirstNameLength(value);
+              } else if (firstName === 0 && fullNameValues.length > 0) {
+                bgColor = colorScaleFullNameLength(value);
+              }
+            }
 
             return (
               <div
-                key={abbr}
+                key={`length-${abbr}`}
                 style={{
                   gridRow: row,
                   gridColumn: col,
                   backgroundColor: bgColor,
                 }}
-                className="aspect-square flex items-center justify-center text-white font-bold rounded text-xs sm:text-sm" /* Responsive text size */
+                className="aspect-square flex items-center justify-center text-white font-bold rounded text-xs sm:text-sm"
               >
                 {abbr}
                 {asterisk ? "*" : ""}
@@ -127,55 +185,100 @@ export default function Home() {
             );
           })}
         </div>
-        {/* --- MAP LEGEND --- */}
+
         <div className="mt-6 sm:mt-8">
           <h4 className="text-sm sm:text-base font-semibold mb-3 text-center text-gray-700">
-            Restriction Level Legend
+            Length Restriction Legend
           </h4>
-          <div className="flex justify-center items-start space-x-2 sm:space-x-4">
-            <div className="flex flex-col items-center text-center">
+          <div className="space-y-3">
+            {firstNameValues.length > 0 && (
+              <div className="text-center">
+                <p className="text-xs font-semibold text-gray-700 mb-1">
+                  First Name Length Limit (chars)
+                </p>
+                <div className="flex items-center justify-center space-x-2">
+                  <span className="text-xs text-gray-600">
+                    {minFirstNameLength === maxFirstNameLength
+                      ? ""
+                      : minFirstNameLength}
+                  </span>
+                  <div
+                    className="w-24 h-4 rounded border border-gray-300"
+                    style={{
+                      background:
+                        minFirstNameLength === maxFirstNameLength
+                          ? colorScaleFirstNameLength(minFirstNameLength)
+                          : getGradientString([
+                              colorScaleFirstNameLength(minFirstNameLength),
+                              colorScaleFirstNameLength(maxFirstNameLength),
+                            ]),
+                    }}
+                  ></div>
+                  <span className="text-xs text-gray-600">
+                    {maxFirstNameLength}
+                  </span>
+                </div>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  {minFirstNameLength === maxFirstNameLength
+                    ? `Limit: ${maxFirstNameLength} (Dark Blue)`
+                    : `(Dark Blue to Light Blue)`}
+                </p>
+              </div>
+            )}
+
+            {fullNameValues.length > 0 && (
+              <div className="text-center mt-2">
+                <p className="text-xs font-semibold text-gray-700 mb-1">
+                  Full Name Length Limit (chars)
+                </p>
+                <div className="flex items-center justify-center space-x-2">
+                  <span className="text-xs text-gray-600">
+                    {minFullNameLength === maxFullNameLength
+                      ? ""
+                      : minFullNameLength}
+                  </span>
+                  <div
+                    className="w-24 h-4 rounded border border-gray-300"
+                    style={{
+                      background:
+                        minFullNameLength === maxFullNameLength
+                          ? colorScaleFullNameLength(minFullNameLength)
+                          : getGradientString([
+                              colorScaleFullNameLength(minFullNameLength),
+                              colorScaleFullNameLength(maxFullNameLength),
+                            ]),
+                    }}
+                  ></div>
+                  <span className="text-xs text-gray-600">
+                    {maxFullNameLength}
+                  </span>
+                </div>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  {minFullNameLength === maxFullNameLength
+                    ? `Limit: ${maxFullNameLength} (Dark Red)`
+                    : `(Dark Red to Light Red)`}
+                </p>
+              </div>
+            )}
+
+            <div className="flex items-center justify-center text-center mt-3">
+              {" "}
+              {/* Adjusted margin top */}
               <div
-                className="w-4 h-4 sm:w-5 sm:h-5 rounded mb-1 border border-gray-400"
-                style={{ backgroundColor: colorScale2(1) }} // Light Red for value 1
+                className="w-4 h-4 sm:w-5 sm:h-5 rounded mb-1 border border-gray-400 mr-2"
+                style={{ backgroundColor: "#dddddd" }}
               ></div>
-              <span className="text-xs text-gray-600">Lesser (1)</span>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div
-                className="w-4 h-4 sm:w-5 sm:h-5 rounded mb-1 border border-gray-400"
-                style={{ backgroundColor: colorScale2(2) }} // Mid Red for value 2
-              ></div>
-              <span className="text-xs text-gray-600">Less (2)</span>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div
-                className="w-4 h-4 sm:w-5 sm:h-5 rounded mb-1 border border-gray-400"
-                style={{ backgroundColor: colorScale2(3) }} // Dark Red for value 3
-              ></div>
-              <span className="text-xs text-gray-600">Moderate (3)</span>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div
-                className="w-4 h-4 sm:w-5 sm:h-5 rounded mb-1 border border-gray-400"
-                style={{ backgroundColor: colorScale2(4) }} // Dark Red for value 3
-              ></div>
-              <span className="text-xs text-gray-600">Great (4)</span>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div
-                className="w-4 h-4 sm:w-5 sm:h-5 rounded mb-1 border border-gray-400"
-                style={{ backgroundColor: colorScale2(5) }} // Dark Red for value 3
-              ></div>
-              <span className="text-xs text-gray-600">Greater (5)</span>
+              <span className="text-xs text-gray-600">
+                Data not available / No specific restriction (0)
+              </span>
             </div>
           </div>
           <p className="mt-3 text-center text-xs text-gray-500 px-2">
-            Map visualizes restriction levels from 1 (lightest red) to 5
-            (darkest red). Grey tiles indicate no specific data for this scale
-            or state not included.
+            Darkest color indicates the shortest length limit found, lightest
+            for the longest. Asterisks (*) indicate data may not be from
+            official sources.
           </p>
         </div>
-        {/* --- END OF MAP LEGEND --- */}
       </div>
     </div>
   );

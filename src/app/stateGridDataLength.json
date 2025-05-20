@@ -3,306 +3,357 @@
         "row": 7,
         "col": 7,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "AK": {
         "row": 1,
         "col": 1,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "AZ": {
         "row": 6,
         "col": 2,
-        "value": 3,
-        "asterisk": true
+        "value": 45,
+        "asterisk": false,
+        "firstName": 1
     },
     "AR": {
         "row": 6,
         "col": 5,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "CA": {
         "row": 5,
         "col": 1,
-        "value": 2,
-        "asterisk": true
+        "value": 60,
+        "asterisk": false,
+        "firstName": 0
     },
     "CO": {
         "row": 5,
         "col": 3,
-        "value": 1,
-        "asterisk": false
+        "value": 100,
+        "asterisk": false,
+        "firstName": 1
     },
     "CT": {
         "row": 4,
         "col": 10,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "DE": {
         "row": 5,
         "col": 10,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "DC": {
         "row": 6,
         "col": 9,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "FL": {
         "row": 8,
         "col": 9,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "GA": {
         "row": 7,
         "col": 8,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "HI": {
         "row": 8,
         "col": 1,
-        "value": 3,
-        "asterisk": false
+        "value": 40,
+        "asterisk": false,
+        "firstName": 1
     },
     "ID": {
         "row": 3,
         "col": 2,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "IL": {
         "row": 3,
         "col": 6,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "IN": {
         "row": 4,
         "col": 6,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "IA": {
         "row": 4,
         "col": 5,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "KS": {
         "row": 6,
         "col": 4,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "KY": {
         "row": 5,
         "col": 6,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "LA": {
         "row": 7,
         "col": 5,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "ME": {
         "row": 1,
         "col": 11,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "MD": {
         "row": 5,
         "col": 9,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "MA": {
         "row": 3,
         "col": 10,
-        "value": 3,
-        "asterisk": true
+        "value": 40,
+        "asterisk": false,
+        "firstName": 1
     },
     "MI": {
         "row": 3,
         "col": 7,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "MN": {
         "row": 3,
         "col": 5,
-        "value": 3,
-        "asterisk": false
+        "value": 50,
+        "asterisk": false,
+        "firstName": 1
     },
     "MS": {
         "row": 7,
         "col": 6,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "MO": {
         "row": 5,
         "col": 5,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "MT": {
         "row": 3,
         "col": 3,
-        "value": 4,
-        "asterisk": false
+        "value": 31,
+        "asterisk": false,
+        "firstName": 0
     },
     "NE": {
         "row": 5,
         "col": 4,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "NV": {
         "row": 4,
         "col": 2,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "NH": {
         "row": 2,
         "col": 11,
-        "value": 1,
-        "asterisk": true
+        "value": 100,
+        "asterisk": false,
+        "firstName": 0
     },
     "NJ": {
         "row": 4,
         "col": 9,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "NM": {
         "row": 6,
         "col": 3,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "NY": {
         "row": 3,
         "col": 9,
-        "value": 4,
-        "asterisk": true
+        "value": 30,
+        "asterisk": false,
+        "firstName": 1
     },
     "NC": {
         "row": 6,
         "col": 7,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "ND": {
         "row": 3,
         "col": 4,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "OH": {
         "row": 4,
         "col": 7,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "OK": {
         "row": 7,
         "col": 4,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "OR": {
         "row": 4,
         "col": 1,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "PA": {
         "row": 4,
         "col": 8,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "RI": {
         "row": 4,
         "col": 11,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "SC": {
         "row": 6,
         "col": 8,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "SD": {
         "row": 4,
         "col": 4,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "TN": {
         "row": 6,
         "col": 6,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "TX": {
         "row": 8,
         "col": 4,
-        "value": 1,
-        "asterisk": true
+        "value": 100,
+        "asterisk": false,
+        "firstName": 0
     },
     "UT": {
         "row": 5,
         "col": 2,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "VT": {
         "row": 2,
         "col": 10,
-        "value": 3,
-        "asterisk": false
+        "value": 50,
+        "asterisk": false,
+        "firstName": 1
     },
     "VA": {
         "row": 5,
         "col": 8,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "WA": {
         "row": 3,
         "col": 1,
-        "value": 4,
-        "asterisk": true
+        "value": 30,
+        "asterisk": false,
+        "firstName": 1
     },
     "WV": {
         "row": 5,
         "col": 7,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "WI": {
         "row": 2,
         "col": 6,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     },
     "WY": {
         "row": 4,
         "col": 3,
         "value": 0,
-        "asterisk": false
+        "asterisk": false,
+        "firstName": 1
     }
 }
